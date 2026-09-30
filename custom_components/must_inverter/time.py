@@ -1,3 +1,4 @@
+import contextlib
 import logging
 from typing import Any
 from datetime import time
@@ -63,10 +64,8 @@ class MustInverterTime(TimeEntity):
                 self._inverter.data[self._key] = value
             else:
                 # the inverter reports something else than what we wrote
-                try:
+                with contextlib.suppress(ValueError):
                     self._inverter.data[self._key] = time(confirmed // 100, confirmed % 100)
-                except ValueError:
-                    pass
 
     @property
     def device_info(self) -> dict[str, Any] | None:

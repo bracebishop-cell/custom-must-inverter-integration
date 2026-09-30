@@ -7,7 +7,7 @@ from typing import Any
 
 
 def _decimals(coeff: float) -> int:
-    """Number of decimals needed to represent values scaled by coeff."""
+    """Return the number of decimals needed to represent values scaled by coeff."""
     if coeff == 0:
         return 0
     return max(0, math.ceil(round(-math.log10(abs(coeff)), 9)))

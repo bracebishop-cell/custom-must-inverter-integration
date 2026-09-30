@@ -2,7 +2,7 @@ import asyncio
 import logging
 import contextlib
 
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import Platform
@@ -530,7 +530,7 @@ class MustInverter:
             # can't identify the device (serial range never read successfully)
             return False
 
-        self.last_successful_poll = datetime.now(timezone.utc)
+        self.last_successful_poll = datetime.now(UTC)
 
         if serial_number == 0xFFFFFFFF or serial_number == 0:
             ir.async_create_issue(

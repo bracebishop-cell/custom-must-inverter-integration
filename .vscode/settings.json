@@ -1,0 +1,8 @@
+{
+  "files.associations": {
+    "configuration.yaml": "home-assistant"
+  },
+  "python.analysis.diagnosticSeverityOverrides": {
+    "reportShadowedImports": "none"
+  }
+}

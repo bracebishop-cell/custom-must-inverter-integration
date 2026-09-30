@@ -1,0 +1,452 @@
+{
+  "title": "Must Solar Inverter",
+  "config": {
+    "step": {
+      "common": {
+        "title": "Common settings",
+        "description": "Configure your Must Inverter integration.",
+        "data": {
+          "name": "Name",
+          "model": "Model",
+          "scan_interval": "Scan Interval (seconds)",
+          "mode": "Connection type"
+        },
+        "data_description": {
+          "name": "Leave empty to use the inverter model as name.",
+          "model": "Leave in Auto Detect unless you're not seeing data that should be available for your device.",
+          "scan_interval": "The interval in seconds to poll the inverter for data.",
+          "mode": "The connection type to use to communicate with the inverter, usually via the included USB cable or via TCP/UDP for wireless connections."
+        }
+      },
+      "serial": {
+        "title": "USB or serial",
+        "description": "Configure the serial parameters for your inverter. The default values should work for most models.",
+        "data": {
+          "device": "USB or Serial device path",
+          "baudrate": "Baud rate",
+          "parity": "Parity (‘E’ven, ‘O’dd or ‘N’one)",
+          "stopbits": "Stop bits (1, 1.5, 2)",
+          "bytesize": "Byte size (7, 8)"
+        },
+        "data_description": {
+          "device": "The path to the USB or Serial device to use for the connection, usually /dev/ttyUSB0 or /dev/ttyS0."
+        }
+      },
+      "tcp": {
+        "title": "TCP",
+        "data": {
+          "host": "Host",
+          "port": "Port"
+        }
+      },
+      "udp": {
+        "title": "UDP",
+        "data": {
+          "host": "Host",
+          "port": "Port"
+        }
+      },
+      "modbus": {
+        "title": "PyModbus advanced settings",
+        "description": "Leave this section unchanged unless you are seeing connection issues or need to adjust the modbus connection settings.",
+        "data": {
+          "device_id": "Device ID",
+          "timeout": "Timeout (seconds)",
+          "retries": "Retries",
+          "reconnect_delay": "Reconnect Delay (seconds)",
+          "reconnect_delay_max": "Max Reconnect Delay (seconds)"
+        },
+        "data_description": {
+          "device_id": "The Modbus device ID (slave address) of the inverter. Default is 4 (0x04). Use this option only when there are multiple inverters connected to the same serial port (such as in cases of inverters running in parallel)",
+          "timeout": "Timeout for connecting and receiving data.",
+          "retries": "Max number of retries per request.",
+          "reconnect_delay": "Minimum delay before reconnecting. Set to 0 to disable reconnecting.",
+          "reconnect_delay_max": "Maximum delay before reconnecting. Pymodbus doubles the delay after each unsuccessful connection attempt."
+        }
+      }
+    }
+  },
+  "options": {
+    "step": {
+      "common": {
+        "title": "Common settings",
+        "description": "Configure your Must Inverter integration.",
+        "data": {
+          "name": "Name",
+          "model": "Model",
+          "scan_interval": "Scan Interval (seconds)",
+          "mode": "Connection type"
+        },
+        "data_description": {
+          "name": "Leave empty to use the inverter model as name.",
+          "model": "Leave in Auto Detect unless you're not seeing data that should be available for your device.",
+          "scan_interval": "The interval in seconds to poll the inverter for data.",
+          "mode": "The connection type to use to communicate with the inverter, usually via the included USB cable or via TCP/UDP for wireless connections."
+        }
+      },
+      "serial": {
+        "title": "USB or serial",
+        "description": "Configure the serial parameters for your inverter. The default values should work for most models.",
+        "data": {
+          "device": "USB or Serial device path",
+          "baudrate": "Baud rate",
+          "parity": "Parity (‘E’ven, ‘O’dd or ‘N’one)",
+          "stopbits": "Stop bits (1, 1.5, 2)",
+          "bytesize": "Byte size (7, 8)"
+        },
+        "data_description": {
+          "device": "The path to the USB or Serial device to use for the connection, usually /dev/ttyUSB0 or /dev/ttyS0."
+        }
+      },
+      "tcp": {
+        "title": "TCP",
+        "data": {
+          "host": "Host",
+          "port": "Port"
+        }
+      },
+      "udp": {
+        "title": "UDP",
+        "data": {
+          "host": "Host",
+          "port": "Port"
+        }
+      },
+      "modbus": {
+        "title": "PyModbus advanced settings",
+        "description": "Leave this section unchanged unless you are seeing connection issues or need to adjust the modbus connection settings.",
+        "data": {
+          "device_id": "Device ID",
+          "timeout": "Timeout (seconds)",
+          "retries": "Retries",
+          "reconnect_delay": "Reconnect Delay (seconds)",
+          "reconnect_delay_max": "Max Reconnect Delay (seconds)"
+        },
+        "data_description": {
+          "device_id": "The Modbus device ID (slave address) of the inverter. Default is 4 (0x04). Use this option only when there are multiple inverters connected to the same serial port (such as in cases of inverters running in parallel)",
+          "timeout": "Timeout for connecting and receiving data.",
+          "retries": "Max number of retries per request.",
+          "reconnect_delay": "Minimum delay before reconnecting. Set to 0 to disable reconnecting.",
+          "reconnect_delay_max": "Maximum delay before reconnecting. Pymodbus doubles the delay after each unsuccessful connection attempt."
+        }
+      }
+    }
+  },
+  "issues": {
+    "no_serial_number": {
+      "title": "No serial number set",
+      "fix_flow": {
+        "step": {
+          "confirm": {
+            "title": "No serial number set",
+            "description": "Your inverter does not have a serial number written to it. This will cause issues with the integration when attempting to add multiple inverters.\n\nThis repair will write a serial number to the inverter. This will not affect the operation of the inverter, but it will allow the integration to work correctly with more than one device simultaneously.",
+            "data": {
+              "new_serial": "Serial number to set"
+            },
+            "data_description": {
+              "new_serial": "You can find your serial number written on the side of the device. Otherwise, you can leave this unchanged to use a random value."
+            }
+          }
+        }
+      }
+    },
+    "mismatched_registers": {
+      "title": "Mismatched Modbus Registers",
+      "description": "The data returned by the modbus device does not match the data that the integration is trying to read.\n\nThis is most likely a race condition from multiple devices trying to concurrenty read from the same serial port.\n\nPlease check the serial configuration and make sure no other devices are connected to the inverter."
+    }
+  },
+  "selector": {
+    "model": {
+      "options": {
+        "autodetect": "Auto Detect",
+        "pv1800": "PV1800 Series",
+        "pv1900": "PV1900 Series",
+        "ph1100": "PH1100 Series"
+      }
+    },
+    "mode": {
+      "options": {
+        "serial": "USB or Serial",
+        "tcp": "TCP",
+        "tls": "TLS",
+        "udp": "UDP"
+      }
+    }
+  },
+  "entity": {
+    "binary_sensor": {
+      "batteryrelay": { "name": "Relay Battery" },
+      "pvrelay": { "name": "Relay PV" },
+      "inverterrelaystate": { "name": "Relay Inverter" },
+      "gridrelaystate": { "name": "Relay Grid" },
+      "loadrelaystate": { "name": "Relay Load" },
+      "n_linerelaystate": { "name": "Relay N Line" },
+      "dcrelaystate": { "name": "Relay DC" },
+      "earthrelaystate": { "name": "Relay Earth" }
+    },
+    "button": {
+      "removetheaccumulateddata": { "name": "Remove Accumulated Data" },
+      "inverterremovetheaccumulateddata": { "name": "Remove Accumulated Data (Inverter)" }
+    },
+    "number": {
+      "floatvoltage": { "name": "Float Voltage" },
+      "absorptionvoltage": { "name": "Absorption Voltage" },
+      "batterylowvoltage": { "name": "Battery Low Voltage" },
+      "maxchargercurrent": { "name": "Max Charger Current" },
+      "batteryah": { "name": "Battery Capacity (Ah)" },
+      "batteryequalizationvoltage": { "name": "Battery Equalization Voltage" },
+      "batteryequalizationtime": { "name": "Battery Equalization Time" },
+      "batteryequalizationtimeout": { "name": "Battery Equalization Timeout" },
+      "batteryequalizationinterval": { "name": "Battery Equalization Interval" },
+      "inverterbatteryvoltagec": { "name": "Calibration Inverter Battery Voltage" },
+      "invertervoltagec": { "name": "Calibration Inverter Voltage" },
+      "gridvoltagec": { "name": "Calibration Grid Voltage" },
+      "busvoltagec": { "name": "Calibration Bus Voltage" },
+      "controlcurrentc": { "name": "Calibration Control Current" },
+      "invertercurrentc": { "name": "Calibration Inverter Current" },
+      "gridcurrentc": { "name": "Calibration Grid Current" },
+      "loadcurrentc": { "name": "Calibration Load Current" },
+      "inverteroutputvoltageset": { "name": "Output Voltage" },
+      "inverteroutputfrequencyset": { "name": "Output Frequency" },
+      "invertermaxdischargercurrent": { "name": "Max Discharger Current" },
+      "batterystopdischargingvoltage": { "name": "Battery Stop Discharging Voltage" },
+      "batterystopchargingvoltage": { "name": "Battery Stop Charging Voltage" },
+      "gridmaxchargercurrentset": { "name": "Grid Max Charger Current" },
+      "inverterbatterylowvoltage": { "name": "Battery Low Voltage (Inverter)" },
+      "maxcombinechargercurrent": { "name": "Max Combine Charger Current" }
+    },
+    "select": {
+      "batterytype": {
+        "name": "Battery Type",
+        "state": {
+          "user_defined": "User Defined",
+          "lithium": "Lithium",
+          "sealed_lead": "Sealed Lead",
+          "agm": "AGM",
+          "gel": "Gel",
+          "flooded": "Flooded"
+        }
+      },
+      "energyusemode": {
+        "name": "Energy Use Mode",
+        "state": {
+          "sbu": "Solar-Battery-Utility",
+          "sub": "Solar-Utility-Battery",
+          "uti": "Utility",
+          "sol": "Solar"
+        }
+      },
+      "gridprotectstandard": {
+        "name": "Grid Protect Standard",
+        "state": {
+          "vde4105": "VDE 4105",
+          "ups": "UPS",
+          "apl": "Appliances",
+          "gen": "Generator"
+        }
+      },
+      "solaruseaim": {
+        "name": "Solar Use Aim",
+        "state": {
+          "lbu": "Load-Battery-Utility",
+          "blu": "Battery-Load-Utility"
+        }
+      },
+      "chargersourcepriority": {
+        "name": "Charger Source Priority",
+        "state": {
+          "solar_first": "Solar First",
+          "solar_and_utility": "Solar and Utility",
+          "only_solar": "Only Solar"
+        }
+      }
+    },
+    "sensor": {
+      "absorbvoltage": { "name": "Absorb Voltage" },
+      "batteryhighvoltage": { "name": "Battery High Voltage" },
+      "absorbchargercurrent": { "name": "Absorb Charger Current" },
+      "chargerworkstate": {
+        "name": "Charger Workstate",
+        "state": {
+          "initialization": "Initialization",
+          "selftest": "Self-Test",
+          "work": "Work",
+          "stop": "Stop"
+        }
+      },
+      "mpptstate": {
+        "name": "MPPT State",
+        "state": {
+          "stop": "Stop",
+          "mppt": "MPPT",
+          "current_limiting": "Current limiting"
+        }
+      },
+      "chargingstate": {
+        "name": "Charging State",
+        "state": {
+          "stop": "Stop",
+          "absorb_charge": "Absorb charge",
+          "float_charge": "Float charge",
+          "equalization_charge": "Equalization charge"
+        }
+      },
+      "pvvoltage": { "name": "PV Voltage" },
+      "batteryvoltage": { "name": "Battery Voltage" },
+      "chargercurrent": { "name": "Charger Current" },
+      "chargerpower": { "name": "Charger Power" },
+      "invertertemperature": { "name": "Inverter Temperature" },
+      "ambienttemperature": { "name": "Ambient Temperature" },
+      "batterytemperature": { "name": "Battery Temperature" },
+      "bmsvoltage": { "name": "BMS Voltage" },
+      "bmscurrent": { "name": "BMS Current" },
+      "bmstemperature": { "name": "BMS Temperature" },
+      "bmsstateofcharge": { "name": "BMS State Of Charge" },
+      "bmsmaxcvset": { "name": "BMS Max Charge Voltage Set" },
+      "bmsmaxccset": { "name": "BMS Max Charge Current Set" },
+      "bmsdiscvset": { "name": "BMS Discharge Voltage Set" },
+      "bmsdisccset": { "name": "BMS Discharge Current Set" },
+      "radiatortemperature": { "name": "Radiator Temperature" },
+      "externaltemperature": { "name": "External Temperature" },
+      "chargererrormessage": { "name": "Error Message (Charger)" },
+      "chargerwarningmessage": { "name": "Warning Message (Charger)" },
+      "battvolgrade": { "name": "Battery Voltage Grade" },
+      "ratedcurrent": { "name": "Rated Current" },
+      "accumulatedpower": { "name": "Accumulated PV Energy" },
+      "accumulatedtime": { "name": "Accumulated Time" },
+      "invertermachinetype": { "name": "Machine Type (Inverter)" },
+      "inverterserialnumber": { "name": "Serial Number (Inverter)" },
+      "inverterhardwareversion": { "name": "Hardware Version (Inverter)" },
+      "invertersoftwareversion": { "name": "Software Version (Inverter)" },
+      "inverterbatteryhighvoltage": { "name": "Battery High Voltage (Inverter)" },
+      "systemsetting": { "name": "System Setting" },
+      "workstate": {
+        "name": "Work State",
+        "state": {
+          "poweron": "Power On",
+          "selftest": "Self-Test",
+          "offgrid": "Off-Grid",
+          "grid_tie": "Grid-Tie",
+          "bypass": "Bypass",
+          "stop": "Stop",
+          "grid_charging": "Grid Charging"
+        }
+      },
+      "acvoltagegrade": { "name": "AC Voltage Grade" },
+      "ratedpower": { "name": "Rated Power" },
+      "inverterbatteryvoltage": { "name": "Battery Voltage (Inverter)" },
+      "invertervoltage": { "name": "Inverter Voltage" },
+      "gridvoltage": { "name": "Grid Voltage" },
+      "busvoltage": { "name": "Bus Voltage" },
+      "controlcurrent": { "name": "Control Current" },
+      "invertercurrent": { "name": "Inverter Current" },
+      "gridcurrent": { "name": "Grid Current" },
+      "loadcurrent": { "name": "Load Current" },
+      "pinverter": { "name": "P Inverter" },
+      "pgrid": { "name": "P Grid" },
+      "pload": { "name": "P Load" },
+      "loadpercent": { "name": "Load Percent" },
+      "sinverter": { "name": "S Inverter" },
+      "sgrid": { "name": "S Grid" },
+      "sload": { "name": "S Load" },
+      "qinverter": { "name": "Q Inverter" },
+      "qgrid": { "name": "Q Grid" },
+      "qload": { "name": "Q Load" },
+      "inverterfrequency": { "name": "Inverter Frequency" },
+      "gridfrequency": { "name": "Grid Frequency" },
+      "invertermaxnumber": { "name": "Inverter Max Number" },
+      "combinetype": { "name": "Combine Type" },
+      "inverternumber": { "name": "Inverter Number" },
+      "acradiatortemperature": { "name": "AC Radiator Temperature" },
+      "transformertemperature": { "name": "Transformer Temperature" },
+      "dcradiatortemperature": { "name": "DC Radiator Temperature" },
+      "accumulatedchargerpower": { "name": "Accumulated Charger Energy" },
+      "accumulateddischargerpower": { "name": "Accumulated Discharger Energy" },
+      "accumulatedbuypower": { "name": "Accumulated Buy Energy" },
+      "accumulatedsellpower": { "name": "Accumulated Sell Energy" },
+      "accumulatedloadpower": { "name": "Accumulated Load Energy" },
+      "accumulatedselfusepower": { "name": "Accumulated Self Use Energy" },
+      "accumulatedpvsellpower": { "name": "Accumulated PV Sell Energy" },
+      "accumulatedgridchargerpower": { "name": "Accumulated Grid Charger Energy" },
+      "invertererrormessage": { "name": "Error Message (Inverter)" },
+      "inverterwarningmessage": { "name": "Warning Message (Inverter)" },
+      "battpower": { "name": "Battery Power" },
+      "battcurrent": { "name": "Battery Current" },
+      "ratedpowerw": { "name": "Rated Power Watts" },
+      "stateofcharge": { "name": "Battery State Of Charge" },
+      "batterystateofhealth": { "name": "Battery State Of Health" },
+      "pv1chargercurrent": { "name": "PV1 Charger Current" },
+      "pv1chargerpower": { "name": "PV1 Charger Power" },
+      "pv2chargercurrent": { "name": "PV2 Charger Current" },
+      "pv2chargerpower": { "name": "PV2 Charger Power" },
+      "pv1voltage": { "name": "PV1 Voltage" },
+      "pv1current": { "name": "PV1 Current" },
+      "pv1power": { "name": "PV1 Power" },
+      "pv2voltage": { "name": "PV2 Voltage" },
+      "pv2current": { "name": "PV2 Current" },
+      "pv2power": { "name": "PV2 Power" },
+      "pv3voltage": { "name": "PV3 Voltage" },
+      "pv3current": { "name": "PV3 Current" },
+      "pv3power": { "name": "PV3 Power" },
+      "pv4voltage": { "name": "PV4 Voltage" },
+      "pv4current": { "name": "PV4 Current" },
+      "pv4power": { "name": "PV4 Power" },
+      "gridvoltager": { "name": "Grid Voltage R" },
+      "gridvoltages": { "name": "Grid Voltage S" },
+      "gridvoltaget": { "name": "Grid Voltage T" },
+      "gridcurrentr": { "name": "Grid Current R" },
+      "gridcurrents": { "name": "Grid Current S" },
+      "gridcurrentt": { "name": "Grid Current T" },
+      "invertervoltager": { "name": "Inverter Voltage R" },
+      "invertervoltages": { "name": "Inverter Voltage S" },
+      "invertervoltaget": { "name": "Inverter Voltage T" },
+      "invertercurrentr": { "name": "Inverter Current R" },
+      "invertercurrents": { "name": "Inverter Current S" },
+      "invertercurrentt": { "name": "Inverter Current T" },
+      "loadvoltager": { "name": "Load Voltage R" },
+      "loadvoltages": { "name": "Load Voltage S" },
+      "loadvoltaget": { "name": "Load Voltage T" },
+      "loadcurrentr": { "name": "Load Current R" },
+      "loadcurrents": { "name": "Load Current S" },
+      "loadcurrentt": { "name": "Load Current T" },
+      "mainsctrphasecurrent": { "name": "Mains CT-R Phase Current" },
+      "mainsctsphasecurrent": { "name": "Mains CT-S Phase Current" },
+      "mainscttphasecurrent": { "name": "Mains CT-T Phase Current" },
+      "mainspowerct": { "name": "Mains Power CT" },
+      "totalpvenergy": { "name": "Total PV Energy" },
+      "totalloadenergy": { "name": "Total Load Energy" },
+      "totalbatterychargeenergy": { "name": "Total Battery Charge Energy" },
+      "totalbatterydischargeenergy": { "name": "Total Battery Discharge Energy" },
+      "totalinverterchargeenergy": { "name": "Total Inverter Charge Energy" },
+      "totalinverterdischargeenergy": { "name": "Total Inverter Discharge Energy" },
+      "totalgridchargeenergy": { "name": "Total Grid Charge Energy" },
+      "totalgriddischargeenergy": { "name": "Total Grid Discharge Energy" },
+      "totalmainschargeenergyct": { "name": "Total Mains Charge Energy (CT)" },
+      "totalmainsdischargeenergyct": { "name": "Total Mains Discharge Energy (CT)" }
+    },
+    "switch": {
+      "chargerworkenable": { "name": "Charger" },
+      "batteryequalizationenable": { "name": "Battery Equalization" },
+      "batteryequalizationimmediately": { "name": "Battery Equalization Immediately" },
+      "inverteroffgridworkenable": { "name": "Offgrid Work" },
+      "invertersearchmodeenable": { "name": "Power Saving Mode" },
+      "inverterongridworkenable": { "name": "Ongrid Work" },
+      "inverterchargerfromgridenable": { "name": "Charger From Grid" },
+      "inverterdischargerenable": { "name": "Discharger" },
+      "inverterdischargertogridenable": { "name": "Discharger To Grid" },
+      "solarpowerbalance": { "name": "Solar Power Balance" },
+      "overloadrestart": { "name": "Overload Restart" },
+      "overtemprestart": { "name": "Over Temperature Restart" },
+      "overloadbypass": { "name": "Overload Bypass" },
+      "autoturnpage": { "name": "Auto Turn Page" },
+      "gridbuzz": { "name": "Grid Buzz" },
+      "buzz": { "name": "Buzz" },
+      "lcdlight": { "name": "LCD Light" },
+      "recordfault": { "name": "Record Fault" }
+    },
+    "time": {
+      "batteryequalizationstarttime": { "name": "Battery Equalization Start Time" },
+      "batteryequalizationendtime": { "name": "Battery Equalization End Time" }
+    }
+  }
+}
